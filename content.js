@@ -147,26 +147,6 @@ function generateAdBasedOnAgeGroup() {
                     </div>
                 `;
 
-                // Close functionality
-                // const closeButton = adContainer.querySelector('#close-ad');
-                // closeButton.addEventListener('click', () => {
-                //     adContainer.style.animation = 'slideOut 0.5s ease-in forwards';
-                    
-                //     // Add slide-out animation style
-                //     const outStyle = document.createElement('style');
-                //     outStyle.textContent = `
-                //         @keyframes slideOut {
-                //             from { transform: translateY(0); opacity: 0.95; }
-                //             to { transform: translateY(100%); opacity: 0; }
-                //         }
-                //     `;
-                //     document.head.appendChild(outStyle);
-                    
-                //     setTimeout(() => {
-                //         document.body.removeChild(adContainer);
-                //     }, 500);
-                // });
-
                 document.body.appendChild(adContainer);
 
                 console.log('Ad injected into the page');
