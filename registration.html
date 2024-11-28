@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link href="styles/registration.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <img src="assets/logo.png" alt="Ankesy Logo" class="logo">
+
+        <h1>Ankesy</h1>
+        <p class="description">If you want to use our extension and get started with phishing simulation for
+            media
+            literacy training, please provide us some information below.</p>
+
+        <form id="registration-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required placeholder="Enter your email">
+
+            <label for="age-group">Age Group:</label>
+            <select id="age-group" required>
+                <option value="">Select Age Group</option>
+                <option value="minor">Minor (under 18)</option>
+                <option value="senior">Senior (50+)</option>
+                <option value="general">General</option>
+            </select>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script src="registration.js"></script>
+
+</body>
+
+</html>

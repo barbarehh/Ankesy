@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom, #76bdfc, #65f1f8, #28b6d2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    line-height: 1.6;
+    color: #37474f;
+}
+
+.container {
+    background-color: #f8fdff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(55, 71, 79, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+}
+
+.logo{
+    width: 80px;
+    height: 80px;
+}
+
+h1 {
+    color: #166c7d;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.description {
+    color: #507799;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    
+}
+
+#registration-form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    text-align: left;
+    margin-bottom: 8px;
+    color: #134950;
+    font-weight: 500;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid #b0bec5;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #546e7a;
+}
+
+button {
+    background-color: #28b6d2;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #5dd7f0;
+    transform: scale(1.02);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+input:focus,
+select:focus,
+button:focus {
+    box-shadow: 0 0 0 3px rgba(96, 137, 139, 0.3);
+}
+
+input:invalid,
+select:invalid {
+    border-color: #1cb5b7;
+}
