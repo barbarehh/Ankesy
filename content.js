@@ -190,15 +190,3 @@ function generateAdBasedOnAgeGroup() {
 // Call the function to generate the ad when the page is loaded
 window.onload = generateAdBasedOnAgeGroup;
 
-
-chrome.storage.local.get(['email', 'password'], (data) => {
-    const { email, password } = data;
-    
-    const userData = {
-        email,
-        password
-    };
-
-    // Send data to the background script
-    chrome.runtime.sendMessage({ action: 'sendRegToAPI', userData });
-});
