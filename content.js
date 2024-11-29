@@ -1,4 +1,5 @@
 
+
 // function for ads
 function generateAdBasedOnAgeGroup() {
 
@@ -10,8 +11,10 @@ function generateAdBasedOnAgeGroup() {
 
 
     // Retrieve user data from storage
-    chrome.storage.local.get(['userRegistered', 'email', 'ageGroup', 'adOpen','type'], (data) => {
-        const { userRegistered, email, ageGroup,type , adOpen} = data;
+    chrome.storage.local.get(['userRegistered', 'email','passowrd', 'ageGroup', 'adOpen','type'], (data) => {
+        const { userRegistered, email, ageGroup,password, type , adOpen} = data;
+
+
 
         let opened = data.adOpen || false;
 
@@ -188,52 +191,14 @@ function generateAdBasedOnAgeGroup() {
 window.onload = generateAdBasedOnAgeGroup;
 
 
-// after clicking on ad ragac
+chrome.storage.local.get(['email', 'password'], (data) => {
+    const { email, password } = data;
+    
+    const userData = {
+        email,
+        password
+    };
 
-
-// // Form tracking functionality
-// document.addEventListener('DOMContentLoaded', () => {
-//     const form = document.querySelector('#userInfoForm'); // Replace with the actual form selector
-//     const field1 = document.querySelector('#field1'); // Replace with actual field IDs
-//     const field2 = document.querySelector('#field2');
-//     const field3 = document.querySelector('#field3');
-
-//     let fieldsFilled = {
-//         field1: false,
-//         field2: false,
-//         field3: false,
-//         formSubmitted: false,
-//     };
-
-//     // Track if fields are filled
-//     [field1, field2, field3].forEach((field, index) => {
-//         if (field) {
-//             field.addEventListener('input', () => {
-//                 fieldsFilled[`field${index + 1}`] = !!field.value; // true if not empty
-//                 console.log(`Field ${index + 1} filled:`, fieldsFilled[`field${index + 1}`]);
-
-//                 // Update the storage whenever a field is updated
-//                 chrome.storage.local.set({ fieldsFilled }, () => {
-//                     console.log('Field interaction updated in storage:', fieldsFilled);
-//                 });
-//             });
-//         }
-//     });
-
-//     // Track form submission
-//     if (form) {
-//         form.addEventListener('submit', (event) => {
-//             event.preventDefault(); // Prevent actual form submission
-
-//             fieldsFilled.formSubmitted = true;
-
-//             // Update Chrome storage with form submission status
-//             chrome.storage.local.set({ fieldsFilled }, () => {
-//                 console.log('Form submission status updated in storage:', fieldsFilled);
-
-//                 // Optionally, send data to an API
-//                 // sendDataToAPI(fieldsFilled);
-//             });
-//         });
-//     }
-// });
+    // Send data to the background script
+    chrome.runtime.sendMessage({ action: 'sendRegToAPI', userData });
+});

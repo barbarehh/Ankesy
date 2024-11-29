@@ -80,6 +80,37 @@ select:focus {
     border-color: #546e7a;
 }
 
+.agreement{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+
+}
+
+.agreement input{
+    height: 15px;
+    width: 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+
+
+}
+
+.agreement input[type="checkbox"] {
+    accent-color: #166c7d; 
+    transform: scale(1.2); 
+    
+}
+
+
+
+.agreement label {
+    font-size: 12px;
+}
+
 button {
     background-color: #28b6d2;
     color: white;
