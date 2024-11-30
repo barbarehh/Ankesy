@@ -4,13 +4,12 @@ document.getElementById('registration-form').addEventListener('submit', (event) 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const rep_password = document.getElementById('confirm-password').value;
-    const ageGroup = document.getElementById('age-group').value;
 
     // Strong password check
     const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     // Validate required fields
-    if (!email || !ageGroup || !password || !rep_password) {
+    if (!email ||  !password || !rep_password) {
         document.getElementById('error').textContent = "Please fill out all fields.";
         return;
     }
@@ -60,7 +59,6 @@ document.getElementById('registration-form').addEventListener('submit', (event) 
                     userRegistered: true,
                     email,
                     password,
-                    ageGroup,
                     adOpen: false,
                     type: ""
                 }, () => {

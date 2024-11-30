@@ -1,26 +1,18 @@
-
-
 // function for ads
-function generateAdBasedOnAgeGroup() {
-
+function generateAd() {
     // don't display ad on phishing page
     if (window.location.hostname === "example.com") {
         console.log('Ad will not be shown on the target page.');
         return;
     }
 
-
     // Retrieve user data from storage
-    chrome.storage.local.get(['userRegistered', 'email','passowrd', 'ageGroup', 'adOpen','type'], (data) => {
-        const { userRegistered, email, ageGroup,password, type , adOpen} = data;
+    chrome.storage.local.get(['userRegistered', 'email', 'adOpen'], (data) => {
+        const { userRegistered, email, adOpen } = data;
+        let opened = adOpen || false;
 
-
-
-        let opened = data.adOpen || false;
-
-
-        if (userRegistered && email && ageGroup) {
-            console.log(`User is registered. Age Group: ${ageGroup}`);
+        if (userRegistered && email ) {
+            console.log(`User is registered.`);
 
             // Wait for 5 seconds before injecting the ad
             setTimeout(() => {
@@ -28,165 +20,124 @@ function generateAdBasedOnAgeGroup() {
 
                 // Create the ad container
                 const adContainer = document.createElement('div');
+                adContainer.id = 'custom-ad-container';
 
                 const colorVariants = [
-                    { bg: '#3498db', border: '#2980b9' },   // Professional blue
-                    { bg: '#2ecc71', border: '#27ae60' },   // Success green
-                    { bg: '#e74c3c', border: '#c0392b' }    // Urgent red
+                    { bg: '#f2f2f7', border: '#c7c7cc', text: '#000000' },   
+                    { bg: '#ffffff', border: '#e5e5ea', text: '#333333' },  
+                    { bg: '#f5f5f5', border: '#d1d1d6', text: '#1c1c1e' }    
                 ];
 
                 const selectedColor = colorVariants[Math.floor(Math.random() * colorVariants.length)];
 
                 // Realistic positioning and styling
-                adContainer.style.position = 'fixed';
-                adContainer.style.bottom = '20px';
-                adContainer.style.right = '20px';
-                adContainer.style.width = '320px';
-                adContainer.style.backgroundColor = selectedColor.bg;
-                adContainer.style.color = '#ffffff';
-                adContainer.style.border = `2px solid ${selectedColor.border}`;
-                adContainer.style.borderRadius = '8px';
-                adContainer.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
-                adContainer.style.padding = '15px';
-                adContainer.style.zIndex = '9999';
-                adContainer.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-                adContainer.style.fontSize = '16px';
-                adContainer.style.maxWidth = '350px';
-                adContainer.style.textAlign = 'left';
-                adContainer.style.opacity = '0.95';
-                adContainer.style.animation = 'slideIn 0.5s ease-out';
-
-                // Add a style for animation
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes slideIn {
-                        from { transform: translateY(100%); opacity: 0; }
-                        to { transform: translateY(0); opacity: 0.95; }
-                    }
-                `;
-                document.head.appendChild(style);
-
-                // Generate the ad content based on the user's age group
-                let adMessage = '';
-                let linkText = '';
-                let companyName = '';
-                let type = '';
-
-                switch (ageGroup) {
-                    case 'minor':
-                        adMessage = 'Exclusive Fortnite Reward Unlocked!';
-                        linkText = 'Claim Your V-Bucks';
-                        companyName = 'Epic Games';
-                        type = 'PRZ';
-                        break;
-                    case 'senior':
-                        adMessage = 'Special Senior Savings Voucher';
-                        linkText = 'Verify Your Discount';
-                        companyName = 'Senior Rewards';
-                        type = 'VCH';
-                        break;
-                    case 'general':
-                        adMessage = 'Congratulations! iPhone Giveaway';
-                        linkText = 'Claim Your Prize';
-                        companyName = 'Apple Promotions';
-                        type = 'PRZ';
-                        break;
-                    default:
-                        adMessage = 'Exclusive Rewards Waiting!';
-                        linkText = 'Claim Now';
-                        companyName = 'Promotion Team';
-                        type = 'PRZ';
-                }
-
-                // Store the type of scam
-                chrome.storage.local.set({ type: type }, () => {
-                    console.log(`Scam type: ${type}`);
+                Object.assign(adContainer.style, {
+                    position: 'fixed',
+                    bottom: '15px',
+                    right: '15px',
+                    width: '300px',
+                    backgroundColor: selectedColor.bg,
+                    color: selectedColor.text,
+                    border: `1px solid ${selectedColor.border}`,
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                    padding: '15px',
+                    zIndex: '9999',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+                    fontSize: '14px',
+                    maxWidth: '330px',
+                    textAlign: 'left',
+                    opacity: '0.98',
+                    transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
+                    transform: 'translateY(20px)'
                 });
 
-                // realistic HTML
-                adContainer.innerHTML = `
-                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                        <div style="
-                            width: 40px; 
-                            height: 40px; 
-                            background-color: white; 
-                            border-radius: 50%; 
-                            display: flex; 
-                            align-items: center; 
-                            justify-content: center; 
-                            margin-right: 10px;
-                        ">
-                            <span style="font-weight: bold; color: ${selectedColor.bg};">🎉</span>
-                        </div>
-                        <div>
-                            <h3 style="margin: 0; font-size: 18px; font-weight: bold;">${companyName}</h3>
-                            <p style="margin: 0; font-size: 14px; opacity: 0.8;">Limited Time Offer</p>
-                        </div>
-                    </div>
-                    <p style="margin: 10px 0; font-size: 16px;">${adMessage}</p>
-                    <a href="https://example.com" target="_blank" style="
-                        display: block;
-                        background-color: white;
-                        color: ${selectedColor.bg};
-                        text-decoration: none;
-                        padding: 10px 15px;
-                        border-radius: 5px;
-                        text-align: center;
-                        font-weight: bold;
-                        margin-bottom: 10px;
-                    ">${linkText}</a>
-                    <div style="
-                        display: flex; 
-                        justify-content: space-between; 
-                        align-items: center;
-                        font-size: 12px;
-                    ">
-                        <span>Expires soon</span>
-                        <span id="close-ad" style="
-                            cursor: pointer;
-                            color: rgba(255,255,255,0.7);
-                            text-decoration: underline;
-                        ">Close</span>
-                    </div>
-                `;
+                // Add a close button
+                const closeButton = document.createElement('button');
+                closeButton.id = 'close-ad';
+                closeButton.innerHTML = '&times;';
+                Object.assign(closeButton.style, {
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '20px',
+                    cursor: 'pointer',
+                    color: selectedColor.text,
+                    opacity: '0.6'
+                });
+
+                closeButton.addEventListener('click', () => {
+                    adContainer.style.opacity = '0';
+                    adContainer.style.transform = 'translateY(100%)';
+                    setTimeout(() => {
+                        document.body.removeChild(adContainer);
+                        chrome.storage.local.set({ adOpen: true }, () => {
+                            console.log('Ad closed by user');
+                        });
+                    }, 300);
+                });
+
+                // Realistic ad content
+                const adTitle = document.createElement('h3');
+                Object.assign(adTitle.style, {
+                    margin: '0 0 10px 0',
+                    fontSize: '16px',
+                    fontWeight: '600'
+                });
+                adTitle.textContent = 'Special Offer Just for You';
+
+                const adText = document.createElement('p');
+                Object.assign(adText.style, {
+                    margin: '0 0 15px 0',
+                    color: selectedColor.text,
+                    opacity: '0.8'
+                });
+                adText.textContent = 'Get 20% off your first purchase. Limited time offer!';
+
+                const ctaButton = document.createElement('a');
+                Object.assign(ctaButton.style, {
+                    display: 'inline-block',
+                    backgroundColor: '#007aff',
+                    color: 'white',
+                    padding: '10px 15px',
+                    textDecoration: 'none',
+                    borderRadius: '6px',
+                    fontSize: '14px',
+                    fontWeight: '500'
+                });
+                ctaButton.textContent = 'Shop Now';
+                ctaButton.href = '#';
+
+                ctaButton.addEventListener('click', () => {
+                    console.log('Ad link clicked');
+                    chrome.storage.local.set({ adOpen: true }, () => {
+                        console.log('Ad link clicked and tracked');
+                    });
+                });
+
+                // Append elements
+                adContainer.appendChild(closeButton);
+                adContainer.appendChild(adTitle);
+                adContainer.appendChild(adText);
+                adContainer.appendChild(ctaButton);
+
+                // Animate appearance
+                setTimeout(() => {
+                    adContainer.style.transform = 'translateY(0)';
+                    adContainer.style.opacity = '0.98';
+                }, 50);
 
                 document.body.appendChild(adContainer);
-
                 console.log('Ad injected into the page');
-
-
-                // Close ad event
-                document.getElementById('close-ad').addEventListener('click', () => {
-                    console.log('Ad closed by user');
-                    adContainer.remove();
-
-                    chrome.storage.local.set({ adOpen: opened }, () => {
-                        console.log(`Close button clicked. opened ?  ${closed}`);
-                    }); // Log the click to the console
-                });
-
-                // Ad link click event
-                const adLink = adContainer.querySelector('a');
-                adLink.addEventListener('click', () => {
-                    console.log('Ad link clicked');
-                    opened = true 
-
-                    // Save the updated ad link click count to localStorage
-                    chrome.storage.local.set({ adOpen: opened }, () => {
-                        console.log(`Ad link clicked. opened?  ${opened}`);
-                    }); // Log the updated click count to the console
-                });
-
-                console.log(data)
 
             }, 5000); // Inject after 5 seconds
         } else {
             console.log('User is not registered. No ad injected.');
         }
     });
-
 }
 
 // Call the function to generate the ad when the page is loaded
-window.onload = generateAdBasedOnAgeGroup;
-
+window.onload = generateAd;
