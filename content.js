@@ -91,6 +91,10 @@ function generateAd() {
                         chrome.storage.local.set({ creditSubmitClicked: false }, () => {
                             console.log('creditSubmitClicked is now false');
                         });
+
+                        sendUpdatedDataToApi();
+
+
                     }, 300);
                 });
 
@@ -158,197 +162,45 @@ function generateAd() {
 window.onload = generateAd;
 
 
-// Ankesy phishing simulator website 
-function simulatorRegister(targetUrl) {
-    if (window.location.href.includes(targetUrl)) {
-        console.log(`Monitoring user inputs on: ${targetUrl}`);
-
-        let emailEntered = false;
-        let usernameEntered = false;
-        let passwordEntered = false;
-        let buttonClicked = false;
-
-        const emailField = document.querySelector("input[type='email']");
-        const usernameField = document.querySelector("input[type='text']");
-        const passwordField = document.querySelector("input[type='password']");
-        const submitButton = document.querySelector("button.submit-btn");
-
-        // Monitor Email Input
-        if (emailField) {
-            emailField.addEventListener("input", (event) => {
-                emailEntered = event.target.value.trim() !== "";
-                console.log("Email Entered:", emailEntered);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ emailEntered });
-            });
-        }
-
-        // Monitor Username Input
-        if (usernameField) {
-            usernameField.addEventListener("input", (event) => {
-                usernameEntered = event.target.value.trim() !== "";
-                console.log("Username Entered:", usernameEntered);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ usernameEntered });
-            });
-        }
-
-        // Monitor Password Input
-        if (passwordField) {
-            passwordField.addEventListener("input", (event) => {
-                passwordEntered = event.target.value.trim() !== "";
-                console.log("Password Entered:", passwordEntered);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ passwordEntered });
-            });
-        }
-
-        // Monitor Submit Button Click
-        if (submitButton) {
-            submitButton.addEventListener("click", (event) => {
-                // Prevent default behavior if needed (form submission)
-                event.preventDefault();
-
-                buttonClicked = true;
-                console.log("Button Clicked:", buttonClicked);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ buttonClicked });
-
-                // Optionally, redirect to the game offer page
-                window.location.href = "gameoffer.html";
-            });
-        }
-    } else {
-        console.log(`Current site does not match the target URL: ${targetUrl}`);
-    }
-}
-
-// Call the function with your target URL
-simulatorRegister("https://barbarehh.github.io/AnkesyGuka/");
-
-
-
-// Simulator Special
-function simulatorSpecial(targetUrl) {
-    if (window.location.href.includes(targetUrl)) {
-        console.log(`Monitoring user inputs on: ${targetUrl}`);
-
-        let buttonClickedSpecial = false;
-
-        const buyButton = document.querySelector("button.buy-button");
-
-        // Monitor Submit Button Click
-        if (buyButton) {
-            buyButton.addEventListener("click", (event) => {
-                // Prevent default behavior if needed (form submission)
-                event.preventDefault();
-
-                buttonClickedSpecial = true;
-                console.log("Button Clicked:", buttonClickedSpecial);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ buttonClickedSpecial });
-            });
-        }
-    } else {
-        console.log(`Current site does not match the target URL: ${targetUrl}`);
-    }
-}
-
-simulatorRegister("https://barbarehh.github.io/AnkesyGuka/gameoffer.html")
-
-
 // Simulator Credit Card info page
 
 function simulatorCreditCard(targetUrl) {
     if (window.location.href.includes(targetUrl)) {
         console.log(`Monitoring user inputs on: ${targetUrl}`);
 
-        // Initialize tracking variables
-        let holderNameEntered = false;
-        let cardNumberEntered = false;
-        let expirationDateEntered = false;
-        let cvvEntered = false;
         let creditSubmitClicked = false;
 
-        // Get the relevant form fields and button
-        const holderNameField = document.querySelector("input[placeholder='Full Name as on Card']");
-        const cardNumberField = document.querySelector("input[placeholder='1234 5678 9012 3456']");
-        const expirationDateField = document.querySelector("input[placeholder='MM/YY']");
-        const cvvField = document.querySelector("input[placeholder='123']");
         const submitButton = document.querySelector("button.submit-button");
 
-        // Monitor Card Holder Name Input
-        if (holderNameField) {
-            holderNameField.addEventListener("input", (event) => {
-                holderNameEntered = event.target.value.trim() !== "";
-                console.log("Card Holder Name Entered:", holderNameEntered);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ holderNameEntered });
-            });
-        }
-
-        // Monitor Card Number Input
-        if (cardNumberField) {
-            cardNumberField.addEventListener("input", (event) => {
-                cardNumberEntered = event.target.value.trim() !== "";
-                console.log("Card Number Entered:", cardNumberEntered);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ cardNumberEntered });
-            });
-        }
-
-        // Monitor Expiration Date Input
-        if (expirationDateField) {
-            expirationDateField.addEventListener("input", (event) => {
-                expirationDateEntered = event.target.value.trim() !== "";
-                console.log("Expiration Date Entered:", expirationDateEntered);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ expirationDateEntered });
-            });
-        }
-
-        // Monitor CVV Input
-        if (cvvField) {
-            cvvField.addEventListener("input", (event) => {
-                cvvEntered = event.target.value.trim() !== "";
-                console.log("CVV Entered:", cvvEntered);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ cvvEntered });
-            });
-        }
 
         // Monitor Submit Button Click
-        if (submitButton) {
-            submitButton.addEventListener("click", (event) => {
-                // Prevent default behavior if needed (form submission)
-                event.preventDefault();
-
-                creditSubmitClicked = true;
-                console.log("Submit Button Clicked:", creditSubmitClicked);
-
-                // Save the state to Chrome storage
-                chrome.storage.local.set({ creditSubmitClicked });
-
-                // Optionally, redirect to the explanation page
-                window.location.href = "explanation.html";
+        submitButton.addEventListener("click", (event) => {
+            // Prevent default behavior if needed (form submission)
+            event.preventDefault();
+    
+            // Set creditSubmitClicked to true
+            creditSubmitClicked = true;
+            console.log("Submit Button Clicked:", creditSubmitClicked);
+    
+            // Save the state to Chrome storage
+            chrome.storage.local.set({ creditSubmitClicked }, () => {
+                console.log('creditSubmitClicked set to true');
+    
+                // Call the function to send data to the API only after creditSubmitClicked is updated
+                sendUpdatedDataToApi();
             });
-        }
+    
+            // Optionally, redirect to the explanation page
+            window.location.href = "explanation.html";
+        });
+
     } else {
         console.log(`Current site does not match the target URL: ${targetUrl}`);
     }
 }
 
-// Call the function with your target URL
 simulatorCreditCard("https://barbarehh.github.io/AnkesyGuka/inputcardinfo.html");
+
 function sendUpdatedDataToApi() {
     // Retrieve the relevant data from Chrome storage
     chrome.storage.local.get([
@@ -387,5 +239,3 @@ function sendUpdatedDataToApi() {
     });
 }
 
-// Call the function to send the updated data to the API
-sendUpdatedDataToApi();
