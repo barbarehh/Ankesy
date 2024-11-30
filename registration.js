@@ -60,7 +60,7 @@ document.getElementById('registration-form').addEventListener('submit', (event) 
                     email,
                     password,
                     adOpen: false,
-                    type: ""
+                    type: "PRZ"
                 }, () => {
                     document.getElementById('registration-form').reset();
                     // Close the page after the alert is closed
