@@ -173,23 +173,26 @@ function simulatorCreditCard(targetUrl) {
         const submitButton = document.querySelector("button.submit-button");
 
 
-        // Monitor Submit Button Click
         submitButton.addEventListener("click", (event) => {
             // Prevent default behavior if needed (form submission)
             event.preventDefault();
-    
+        
             // Set creditSubmitClicked to true
             creditSubmitClicked = true;
             console.log("Submit Button Clicked:", creditSubmitClicked);
-    
+        
             // Save the state to Chrome storage
             chrome.storage.local.set({ creditSubmitClicked }, () => {
                 console.log('creditSubmitClicked set to true');
-    
-                // Call the function to send data to the API only after creditSubmitClicked is updated
-                sendUpdatedDataToApi();
+        
+                // Add a delay before sending data to the API
+                setTimeout(() => {
+                    // Call the function to send data to the API after a delay
+                    sendUpdatedDataToApi();
+                    alert('gaigzavna shechem,a');
+                }, 1000); // Delay of 1 second
             });
-    
+        
             // Optionally, redirect to the explanation page
             window.location.href = "explanation.html";
         });
@@ -228,10 +231,12 @@ function sendUpdatedDataToApi() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(apiData)
+
         })
         .then(response => response.json())
         .then(responseData => {
             console.log('Response from API:', responseData);
+            console.log(responseData)
         })
         .catch(error => {
             console.error('Error sending data to API:', error);
