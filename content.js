@@ -163,7 +163,6 @@ window.onload = generateAd;
 
 
 // Simulator Credit Card info page
-
 function simulatorCreditCard(targetUrl) {
     if (window.location.href.includes(targetUrl)) {
         console.log(`Monitoring user inputs on: ${targetUrl}`);
@@ -184,15 +183,9 @@ function simulatorCreditCard(targetUrl) {
             // Save the state to Chrome storage
             chrome.storage.local.set({ creditSubmitClicked }, () => {
                 console.log('creditSubmitClicked set to true');
-        
-                // Add a delay before sending data to the API
-                setTimeout(() => {
-                    // Call the function to send data to the API after a delay
-                    sendUpdatedDataToApi();
-                    alert('gaigzavna shechem,a');
-                }, 1000); // Delay of 1 second
             });
-        
+
+            sendUpdatedDataToApi();
             // Optionally, redirect to the explanation page
             window.location.href = "explanation.html";
         });
